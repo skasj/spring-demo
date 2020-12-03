@@ -36,6 +36,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -52,7 +53,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.1.25.Final</version>
+            <version>4.1.32.Final</version>
         </dependency>
          <!--https://mvnrepository.com/artifact/io.netty/netty-all-->
         <dependency>

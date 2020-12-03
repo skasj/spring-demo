@@ -3,7 +3,6 @@ package com.example.springdemo.service;
 import com.example.springdemo.model.dto.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Service;
 
 @Service
