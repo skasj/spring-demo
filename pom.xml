@@ -16,6 +16,7 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <jooq.version>3.12.3</jooq.version>
     </properties>
 
     <dependencies>
@@ -36,6 +37,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.12</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -58,7 +60,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <version>8.0.18</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -97,6 +99,18 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>
+        <!--        &lt;!&ndash; base jooq dependency &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jooq</groupId>-->
+        <!--            <artifactId>jooq</artifactId>-->
+        <!--            <version>${jooq.version}</version>-->
+        <!--        </dependency>-->
+
     </dependencies>
 
     <build>
@@ -105,6 +119,38 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+<!--            <plugin>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <configuration>-->
+<!--                    <source>1.8</source>-->
+<!--                    <target>1.8</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+<!--            &lt;!&ndash; 代码生成器插件 &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.jooq</groupId>-->
+<!--                <artifactId>jooq-codegen-maven</artifactId>-->
+<!--                <version>3.12.3</version>-->
+<!--                <configuration>-->
+<!--                    <jdbc>-->
+<!--                        <driver>com.mysql.cj.jdbc.Driver</driver>-->
+<!--                        <url>jdbc:mysql://121.37.156.220:3306/myDB?serverTimezone=GMT%2B8</url>-->
+<!--                        <user>root</user>-->
+<!--                        <password>82046722</password>-->
+<!--                    </jdbc>-->
+<!--                    <generator>-->
+<!--                        <database>-->
+<!--                            <includes>class.*</includes>-->
+<!--                            <inputSchema>myDB</inputSchema>-->
+<!--                        </database>-->
+<!--                        <target>-->
+<!--                            <packageName>com.example.springdemo.learn.codegen</packageName>-->
+<!--                            <directory>/src/main/java</directory>-->
+<!--                        </target>-->
+<!--                    </generator>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
