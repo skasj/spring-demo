@@ -1,8 +1,6 @@
 package com.example.springdemo.controller;
 
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.example.springdemo.annotation.MyAnnotationForAspect;
-import com.example.springdemo.api.MyDubboGroupService;
 import com.example.springdemo.model.dto.UserDto;
 import com.example.springdemo.model.po.UserPo;
 import com.example.springdemo.service.UserService;
@@ -19,9 +17,6 @@ public class MyMybatisController implements Serializable {
 
     @Resource
     private UserService userService;
-
-    @Reference
-    private MyDubboGroupService myDubboGroupService;
 
     @GetMapping("user")
     @ResponseBody

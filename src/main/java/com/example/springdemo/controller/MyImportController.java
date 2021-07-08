@@ -2,6 +2,7 @@ package com.example.springdemo.controller;
 
 import com.example.springdemo.conf.MyImportConfig;
 import org.springframework.beans.BeansException;
+import org.springframework.cglib.proxy.Proxy;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Import;
@@ -22,7 +23,6 @@ public class MyImportController implements ApplicationContextAware {
 
     @GetMapping("/importConfig")
     public Object getImportConfig(){
-
         Object bean = applicationContext.getBean("com.example.springdemo.conf.MyImportConfig");
         Object user = applicationContext.getBean("User");
         System.out.println(bean.toString());
