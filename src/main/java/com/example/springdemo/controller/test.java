@@ -1,9 +1,5 @@
 package com.example.springdemo.controller;
 
-import org.junit.Assert;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-
 public class test {
 
     public static void main(String[] args) {

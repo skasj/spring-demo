@@ -9,6 +9,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface UserMapper extends BaseMapper<UserPo> {
 
-    @Select("select id,userName,password from user where userName = #{name}")
+    @Select("select id,nickName,password from 3dker_user where nickName = #{name}")
     UserPo selectByName(@Param("name") String name);
 }

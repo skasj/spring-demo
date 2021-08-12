@@ -13,12 +13,13 @@ import lombok.NoArgsConstructor;
 public class UserPo {
     @TableId(type=IdType.AUTO)
     Integer id;
-    @TableField("userName")
-    String userName;
+    @TableField("nick_name")
+    String nickName;
+    @TableField("password")
     String password;
 
     public UserPo(String userName, String password) {
-        this.userName = userName;
+        this.nickName = userName;
         this.password = password;
     }
 }
