@@ -13,8 +13,6 @@ import java.io.Serializable;
 @RequestMapping("/mybatis")
 public class MyMybatisController implements Serializable {
 
-
-
     @Resource
     private UserService userService;
 
