@@ -1,5 +1,6 @@
 package com.example.springdemo.component.signature;
 
+import com.fasterxml.jackson.databind.JavaType;
 import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
@@ -26,7 +27,7 @@ public class SignatureCallDto<T, R> implements Serializable {
 
     private List<Object> paramList;
 
-    private Class[] paramClassTypes;
+    private JavaType[] paramClassTypes;
 
     public enum MethodType {
         /**

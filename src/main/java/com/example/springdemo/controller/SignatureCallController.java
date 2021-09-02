@@ -33,7 +33,7 @@ public class SignatureCallController {
         signatureCallDto.setBeanClass(SignatureCallController.class);
         signatureCallDto.setBeanName("signature");
         signatureCallDto.setMethodName("test");
-        signatureCallDto.setParamClassTypes(new Class[]{String.class});
+//        signatureCallDto.setParamClassTypes(new Class[]{String.class});
         signatureCallDto.setParamArray(new String[]{"my"});
         signatureCallDto.setReturnType(Integer.class);
         return persistentCallHelper.callService(signatureCallDto);

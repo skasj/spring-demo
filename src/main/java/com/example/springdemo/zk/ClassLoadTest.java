@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import org.apache.dubbo.common.utils.StringUtils;
 
 public class ClassLoadTest {
     static class MyClassLoad extends URLClassLoader {

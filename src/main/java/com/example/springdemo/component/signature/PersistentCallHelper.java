@@ -1,16 +1,17 @@
 package com.example.springdemo.component.signature;
 
-import com.example.springdemo.model.dto.User;
 import com.example.springdemo.model.dto.UserDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
@@ -39,8 +40,9 @@ public class PersistentCallHelper implements ApplicationContextAware {
             // 创建Lookup对象
             MethodHandles.Lookup l = MethodHandles.lookup();
             // 创建方法句柄类型
-            MethodType mt = MethodType.methodType(signatureCallDto.getReturnType(),
-                signatureCallDto.getParamClassTypes());
+            Class<?>[] objects = Arrays.stream(signatureCallDto.getParamClassTypes())
+                .map(JavaType::getRawClass).toArray(Class[]::new);
+            MethodType mt = MethodType.methodType(signatureCallDto.getReturnType(), objects);
             // 创建方法句柄，绑定具体的类
             MethodHandle mh = l
                 .findVirtual(signatureCallDto.getBeanClass(), signatureCallDto.getMethodName(), mt);
@@ -62,27 +64,59 @@ public class PersistentCallHelper implements ApplicationContextAware {
         this.applicationContext = applicationContext;
     }
 
-    public static void main(String[] args) throws JsonProcessingException {
-        UserDto userDto = UserDto.builder().id(1).passWord("123456").userName("123").build();
-        SignatureCallDto<User, UserDto> chanceRemoteRSignatureCallDto = new SignatureCallDto<>();
-        chanceRemoteRSignatureCallDto.setBeanClass(User.class);
-        chanceRemoteRSignatureCallDto.setBeanName("chanceRemote");
-        chanceRemoteRSignatureCallDto.setMethodName("saveInquiry");
-        chanceRemoteRSignatureCallDto.setMethodType(SignatureCallDto.MethodType.VIRTUAL);
-        chanceRemoteRSignatureCallDto.setParamClassTypes(new Class[]{UserDto.class});
-        List<Object> objectList = new ArrayList<>();
-        objectList.add(userDto);
-        objectList.add(1);
-        chanceRemoteRSignatureCallDto.setParamList(objectList);
-        chanceRemoteRSignatureCallDto.setReturnType(UserDto.class);
+    public static void main(String[] args)
+        throws Throwable {
         ObjectMapper objectMapper = new ObjectMapper();
-        String x = objectMapper.writeValueAsString(chanceRemoteRSignatureCallDto);
-        System.out.println(x);
-        SignatureCallDto signatureCallDto = objectMapper.readValue(x, SignatureCallDto.class);
-        List paramList = signatureCallDto.getParamList();
-        UserDto userDto1 = objectMapper.convertValue(paramList.get(0), UserDto.class);
-        Integer integer = objectMapper.convertValue(paramList.get(1), Integer.class);
-        System.out.println(objectMapper.writeValueAsString(userDto1));
-        System.out.println(objectMapper.writeValueAsString(integer));
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+        List<UserDto> list = new ArrayList<>();
+        UserDto saleTrackItemDto1 = UserDto.builder()
+            .id(1)
+            .passWord("agent")
+            .build();
+        UserDto saleTrackItemDto2 = UserDto.builder()
+            .id(2)
+            .passWord("agent2")
+            .build();
+        list.add(saleTrackItemDto1);
+        list.add(saleTrackItemDto2);
+        SignatureCallDto<PersistentCallHelper, Integer> signatureCallDto = new SignatureCallDto<>();
+        signatureCallDto.setBeanClass(PersistentCallHelper.class);
+        signatureCallDto.setBeanName("userService");
+        signatureCallDto.setMethodName("out");
+        signatureCallDto.setMethodType(SignatureCallDto.MethodType.VIRTUAL);
+        CollectionType collectionType = objectMapper.getTypeFactory()
+            .constructCollectionType(List.class, UserDto.class);
+        signatureCallDto.setParamClassTypes(new JavaType[]{collectionType});
+        signatureCallDto.setParamArray(new Object[]{list});
+        signatureCallDto.setReturnType(Integer.class);
+        String msg = objectMapper.writeValueAsString(signatureCallDto);
+        System.out.println(msg);
+
+        SignatureCallDto scccc = objectMapper.readValue(msg, SignatureCallDto.class);
+        PersistentCallHelper persistentCallHelper = new PersistentCallHelper();
+
+        // 创建Lookup对象
+        MethodHandles.Lookup l = MethodHandles.lookup();
+        // 创建方法句柄类型
+        Class<?>[] objects = Arrays.stream(scccc.getParamClassTypes())
+            .map(JavaType::getRawClass).toArray(Class[]::new);
+        MethodType mt = MethodType.methodType(scccc.getReturnType(), objects);
+        // 创建方法句柄，绑定具体的类
+        MethodHandle mh = l
+            .findVirtual(scccc.getBeanClass(), scccc.getMethodName(), mt);
+        // 通过方法句柄调用方法，绑定目标对象及传入参数
+        List<Object> arguments = new ArrayList<>();
+        arguments.add(persistentCallHelper);
+        arguments.addAll(Arrays.asList(scccc.getParamArray()));
+        Object invoke = mh.invokeWithArguments(arguments);
+        System.out.println(invoke);
+    }
+
+    @SneakyThrows
+    public Integer out(List<UserDto> userDtos) {
+        ObjectMapper test = new ObjectMapper();
+        System.out.println(test.writeValueAsString(userDtos));
+        return 354;
     }
 }
